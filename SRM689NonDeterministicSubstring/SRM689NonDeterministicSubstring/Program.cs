@@ -37,4 +37,11 @@ namespace SRM689NonDeterministicSubstring
       return -1;
     }
   }
+
+  class Node
+  {
+    public char c;
+    public Node equal;
+    public Node notequal;
+  }
 }
