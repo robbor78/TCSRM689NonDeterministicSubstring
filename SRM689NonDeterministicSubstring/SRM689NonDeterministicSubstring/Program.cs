@@ -35,7 +35,46 @@ namespace SRM689NonDeterministicSubstring
     public long ways(String a, String b)
     {
       Node trie = BuildTrue(a);
-      return -1;
+
+      int count = CountWays(trie, b);
+
+      return count;
+    }
+
+    private int CountWays(Node trie, string b)
+    {
+      return CountWays(trie, b, 0);
+    }
+
+    private int CountWays(Node trie, string b, int d)
+    {
+      if (d >= b.Length)
+      {
+        return 1;
+      }
+
+      if (trie == null)
+      {
+        return 0;
+      }
+
+      char c = b[d];
+
+      bool isEqual = c == trie.c;
+      bool isWildcard = c == '?';
+
+      int count = 0;
+      if (isWildcard || isEqual)
+      {
+        count += CountWays(trie.equal, b, d + 1);
+      }
+
+      if (isWildcard || !isEqual)
+      {
+        count += CountWays(trie.notequal, b, d);
+      }
+
+      return count;
     }
 
     private Node BuildTrue(string a)
