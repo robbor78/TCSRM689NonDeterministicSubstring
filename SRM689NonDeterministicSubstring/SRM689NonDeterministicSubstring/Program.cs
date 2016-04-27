@@ -32,9 +32,40 @@ namespace SRM689NonDeterministicSubstring
 
     }
 
-    public long ways(String A, String B)
+    public long ways(String a, String b)
     {
+      Node trie = BuildTrue(a);
       return -1;
+    }
+
+    private Node BuildTrue(string a)
+    {
+      Node trie = null;
+
+      for (int i = 0; i < a.Length; i++)
+      {
+        trie = put(trie, a.Substring(i), 0);
+      }
+
+      return trie;
+    }
+
+    private Node put(Node x, String key, int d)
+    {
+      char c = key[d];
+      if (x == null)
+      {
+        x = new Node(); x.c = c;
+      }
+      if (c != x.c)
+      {
+        x.notequal = put(x.notequal, key, d);
+      }
+      else if (d < key.Count() - 1)
+      {
+        x.equal = put(x.equal, key, d + 1);
+      }
+      return x;
     }
   }
 
